@@ -12,17 +12,41 @@ class App extends Component {
   }
   }
  
-  
-  componentDidMount (){
-    fetch('https://wger.de/api/v2/exercise/')
-    .then(res => res.json())
-    .then(json => {
-      this.setState({
-        isLoading: true,
-        exercises: json,
-      })
-    })
+  async componentDidMount () {
+
+    try {
+
+      setInterval(async () => {
+
+        const res = await fetch('https://wger.de/api/v2/exercise/');
+        const exercises = await res.json();
+
+        this.setState({
+          exercises: exercises
+        })
+
+      }, 1000)
+
+    } catch (e) {
+      console.log(e)
+    }
+
   }
+  
+//   componentDidMount (){
+//     const fetchData = async () => {fetch('https://wger.de/api/v2/exercise/')
+//     .then(res => res.json())
+//     .then(json => {
+//       this.setState({
+//         isLoading: true,
+//         exercises: json,
+//       })
+  
+//     setInterval(() => this.fetchData(),100000);
+
+//     // return () => clearInterval(interval);
+  
+// });
 
  
   render() {
